@@ -70,7 +70,7 @@ def handle_message(event):
         reply_mcd = back[turn][countM % len(back[turn])]
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=f"目前 7-11是 {reply_711} 買，麥當勞是 {reply_mcd} 買")
+            TextSendMessage(text=f"目前 7-11是 {reply_711} 買\n麥當勞是 {reply_mcd} 買")
         )
         return
 
@@ -83,9 +83,9 @@ def handle_message(event):
             "📋 可用指令：\n"
             "1️⃣ 買 7-11\n"
             "2️⃣ 買 麥當勞\n"
-            "3️⃣ 誰買\n"
-            "4️⃣ 目前\n"
-            "5️⃣ 換邊\n"
+            "3️⃣ 目前\n"
+            "4️⃣ 換邊\n"
+            "5️⃣ 指令\n"
         )
         line_bot_api.reply_message(
             event.reply_token,
