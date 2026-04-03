@@ -26,19 +26,6 @@ turn = 0  # 0 -> three, 1 -> four
 line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(CHANNEL_SECRET)
 
-@app.route("/callback", methods=['POST'])
-def callback():
-    signature = request.headers.get('X-Line-Signature', '')
-    body = request.get_data(as_text=True)
-
-    try:
-        handler.handle(body, signature)
-    except Exception as e:
-        print("Error:", e)
-        abort(400)
-
-    return 'OK'
-
 # 健康檢查
 @app.route("/", methods=['GET'])
 def home():
