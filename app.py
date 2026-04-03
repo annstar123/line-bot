@@ -49,7 +49,6 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     global countN, countM, turn
-    keep_alive()
     user_msg = event.message.text
     print(f"Received message: {user_msg}")  # <- log 收到的訊息
 
@@ -96,5 +95,6 @@ def handle_message(event):
     
 # Render 上必須綁定 0.0.0.0 並使用動態 port
 if __name__ == "__main__":
+    keep_alive()
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
