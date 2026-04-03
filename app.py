@@ -77,7 +77,22 @@ def handle_message(event):
         turn = (turn + 1) % len(back)
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text="已換邊"))
         return
-
+    elif user_msg in ["指令", "help"]:
+        reply_text = (
+            "📋 可用指令：\n"
+            "1️⃣ 買 7-11\n"
+            "2️⃣ 買 麥當勞\n"
+            "3️⃣ 誰買\n"
+            "4️⃣ 目前\n"
+            "5️⃣ 換邊\n"
+        )
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(text=reply_text)
+        )
+        print("Replied with command list")
+        return
+    
 # Render 上必須綁定 0.0.0.0 並使用動態 port
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
