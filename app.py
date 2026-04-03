@@ -49,6 +49,7 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     global countN, countM, turn
+    keep_alive()
     user_msg = event.message.text
     print(f"Received message: {user_msg}")  # <- log 收到的訊息
 
