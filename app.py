@@ -12,7 +12,7 @@ CHANNEL_SECRET = os.getenv("CHANNEL_SECRET")
 app = Flask(__name__)
 
 three = ["文勝", "勝方", "方文"]
-
+count = 0
 
 line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(CHANNEL_SECRET)
@@ -35,7 +35,8 @@ def handle_message(event):
     user_msg = event.message.text
 
     if user_msg == "誰買":
-        reply = three[0]
+        reply = three[count % 3]
+        count += 1
 
     line_bot_api.reply_message(
         event.reply_token,
