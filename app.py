@@ -2,6 +2,7 @@ from flask import Flask, request, abort
 from linebot import LineBotApi, WebhookHandler
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 from dotenv import load_dotenv
+from keep_alive import keep_alive
 import os
 
 # 載入環境變數
@@ -38,10 +39,31 @@ def callback():
 
     return 'OK'
 
+# 健康檢查
+@app.route("/", methods=['GET'])
+def home():
+    return "Bot is running ✅"
+
+# LINE webhook
+@app.route("/callback", methods=['POST'])
+def callback():
+    signature = request.headers.get('X-Line-Signature', '')
+    body = request.get_data(as_text=True)
+    print("Received body:", body)  # <- 這裡會把 webhook JSON 印出來
+
+    try:
+        handler.handle(body, signature)
+    except Exception as e:
+        print("Handler failed:", e)
+        abort(400)
+
+    return 'OK'
+
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     global countN, countM, turn
     user_msg = event.message.text
+    print(f"Received message: {user_msg}")  # <- log 收到的訊息
 
     if user_msg == "買 7-11":
         reply = back[turn][countN % len(back[turn])]
