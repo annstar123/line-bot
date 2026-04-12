@@ -68,8 +68,8 @@ def handle_message(event):
         return
 
     elif user_msg == "目前":
-        reply_711 = back[turn][countN % len(back[turn])]
-        reply_mcd = back[turn][countM % len(back[turn])]
+        reply_711 = back[turn][countN + 1 % len(back[turn])]
+        reply_mcd = back[turn][countM + 1 % len(back[turn])]
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(
