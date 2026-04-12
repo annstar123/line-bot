@@ -13,7 +13,7 @@ CHANNEL_SECRET = os.getenv("CHANNEL_SECRET")
 app = Flask(__name__)
 
 # 輪流人員名單
-three = ["文勝", "勝方", "方文"]
+three = ["文勝", "方文", "勝方"]
 four = ["文勝", "心方"]
 back = [three, four]
 
@@ -26,15 +26,17 @@ turn = 0  # 0 -> three, 1 -> four
 line_bot_api = LineBotApi(CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(CHANNEL_SECRET)
 
+
 # 健康檢查
-@app.route("/", methods=['GET'])
+@app.route("/", methods=["GET"])
 def home():
     return "Bot is running ✅"
 
+
 # LINE webhook
-@app.route("/callback", methods=['POST'])
+@app.route("/callback", methods=["POST"])
 def callback():
-    signature = request.headers.get('X-Line-Signature', '')
+    signature = request.headers.get("X-Line-Signature", "")
     body = request.get_data(as_text=True)
     print("Received body:", body)  # <- 這裡會把 webhook JSON 印出來
 
@@ -44,7 +46,8 @@ def callback():
         print("Handler failed:", e)
         abort(400)
 
-    return 'OK'
+    return "OK"
+
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -69,7 +72,9 @@ def handle_message(event):
         reply_mcd = back[turn][countM % len(back[turn])]
         line_bot_api.reply_message(
             event.reply_token,
-            TextSendMessage(text=f"目前 7-11是 {reply_711} 買\n麥當勞是 {reply_mcd} 買")
+            TextSendMessage(
+                text=f"目前 7-11是 {reply_711} 買\n麥當勞是 {reply_mcd} 買"
+            ),
         )
         return
 
@@ -86,13 +91,11 @@ def handle_message(event):
             "4️⃣ 換邊\n"
             "5️⃣ 指令\n"
         )
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(text=reply_text)
-        )
+        line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply_text))
         print("Replied with command list")
         return
-    
+
+
 # Render 上必須綁定 0.0.0.0 並使用動態 port
 if __name__ == "__main__":
     keep_alive()
