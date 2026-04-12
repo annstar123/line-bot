@@ -57,14 +57,14 @@ def handle_message(event):
 
     if user_msg == "買 7-11":
         reply = back[turn][countN % len(back[turn])]
-        countN += 1
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
+        countN += 1
         return
 
     elif user_msg == "買 麥當勞":
         reply = back[turn][countM % len(back[turn])]
-        countM += 1
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
+        countM += 1
         return
 
     elif user_msg == "目前":
