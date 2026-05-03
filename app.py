@@ -73,7 +73,7 @@ def handle_message(event):
         line_bot_api.reply_message(
             event.reply_token,
             TextSendMessage(
-                text=f"目前 7-11是 {reply_711} 買\n麥當勞是 {reply_mcd} 買"
+                text=f"目前 7-11 是 {reply_711} 買\n麥當勞是 {reply_mcd} 買"
             ),
         )
         return
