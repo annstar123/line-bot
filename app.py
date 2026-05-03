@@ -56,15 +56,15 @@ def handle_message(event):
     print(f"Received message: {user_msg}")  # <- log 收到的訊息
 
     if user_msg == "買 7-11":
+        countN += 1
         reply = back[turn][countN % len(back[turn])]
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
-        countN += 1
         return
 
     elif user_msg == "買 麥當勞":
+        countM += 1
         reply = back[turn][countM % len(back[turn])]
         line_bot_api.reply_message(event.reply_token, TextSendMessage(text=reply))
-        countM += 1
         return
 
     elif user_msg == "目前":
